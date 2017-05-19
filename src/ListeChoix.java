@@ -181,8 +181,6 @@ public class ListeChoix extends JFrame implements ActionListener {
 		img.getScaledInstance(20, 50, 50);
 		label_1.setIcon(new ImageIcon(img));
 		label_1.setBounds(650, 15, 165, 149);
-		label_1.setLayout(new BorderLayout());
-		label_1.add(label_1, BorderLayout.CENTER);
 		getContentPane().add(label_1);
 		RecuperationSalle();
 	}
