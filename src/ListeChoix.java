@@ -182,6 +182,7 @@ public class ListeChoix extends JFrame implements ActionListener {
 		label_1.setIcon(new ImageIcon(img));
 		label_1.setBounds(650, 15, 165, 149);
 		getContentPane().add(label_1);
+		
 		RecuperationSalle();
 	}
 	
