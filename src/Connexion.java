@@ -33,6 +33,7 @@ public class Connexion extends JFrame implements ActionListener {
 	private JButton btnValider;
 	
 	public static String nomUti, prenomUti;
+	static int lvlUti;
 	
 	final static String driver = "com.mysql.jdbc.Driver";
 	final static String url = "jdbc:mysql://127.0.0.1/digicode?autoReconnect=true&useSSL=false";
@@ -125,6 +126,7 @@ public class Connexion extends JFrame implements ActionListener {
 				resultat.next();
 				nomUti = resultat.getString(2);
 				prenomUti = resultat.getString(3);
+				lvlUti = resultat.getInt(6);
 				
 				resultat.last();
 				
@@ -154,6 +156,12 @@ public class Connexion extends JFrame implements ActionListener {
 	public static String getNomUti() {
 		return nomUti;
 	}
+
+	public static int getLvlUti() {
+		return lvlUti;
+	}
+
+	
 	
 	
 	

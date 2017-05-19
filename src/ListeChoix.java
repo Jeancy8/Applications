@@ -44,10 +44,11 @@ public class ListeChoix extends JFrame implements ActionListener {
 	private JTextField Value_nbPersonneMax;
 	private JTextField Value_etage;
 	private JTextField Value_emailSalle;
-	private JButton btnDeco;
+	private JButton btnDeco, btnAjout;
 	
 	JComboBox liste = new JComboBox();
 	String InfoDesSalles[] = new String[15];
+	int t;
 	
 	final static String driver = "com.mysql.jdbc.Driver";
 	final static String url = "jdbc:mysql://127.0.0.1/digicode?autoReconnect=true&useSSL=false";
@@ -56,6 +57,8 @@ public class ListeChoix extends JFrame implements ActionListener {
 	
 	static String ListeSalle = "SELECT * FROM salles";
 	//static String InfoSalle = "SELECT * FROM salles WHERE nom ='"+ nomSalle +"'";
+	
+	Connexion C = new Connexion();
 
 	/**
 	 * Launch the application.
@@ -77,7 +80,6 @@ public class ListeChoix extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public ListeChoix() {
-		Connexion C = new Connexion();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(550, 300, 854, 314);
@@ -169,9 +171,16 @@ public class ListeChoix extends JFrame implements ActionListener {
 		getContentPane().add(btnDeco);
 		btnDeco.addActionListener(this);
 		
+		btnAjout = new JButton("Ajouter une salle");
+		btnAjout.setBounds(338, 216, 168, 23);
+		btnAjout.addActionListener(this);
+		if(C.getLvlUti() == 1){
+			getContentPane().add(btnAjout);
+		}
+		
 		JLabel label = new JLabel("");
-		label.setForeground(Color.ORANGE);
-		label.setFont(new Font("Trebuchet MS", Font.BOLD, 13));
+		label.setForeground(SystemColor.textHighlight);
+		label.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		label.setBounds(22, 11, 178, 20);
 		getContentPane().add(label);
 		label.setText(C.getPrenomUti()+" "+ C.getNomUti());
@@ -182,6 +191,15 @@ public class ListeChoix extends JFrame implements ActionListener {
 		label_1.setIcon(new ImageIcon(img));
 		label_1.setBounds(650, 15, 165, 149);
 		getContentPane().add(label_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Session ADMIN");
+		lblNewLabel_2.setForeground(SystemColor.textHighlight);
+		lblNewLabel_2.setBackground(Color.WHITE);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_2.setBounds(650, 238, 119, 14);
+		if(C.getLvlUti() == 1){
+			getContentPane().add(lblNewLabel_2);
+		}
 		
 		RecuperationSalle();
 	}
@@ -213,12 +231,9 @@ public class ListeChoix extends JFrame implements ActionListener {
 			PreparedStatement ls = con.prepareStatement("SELECT * FROM salles WHERE nom ='"+ nomSalle +"'");
 			ResultSet Info = ls.executeQuery();
 			while(Info.next()){
-				InfoDesSalles[3] = Info.getString(3);
-				InfoDesSalles[4] = Info.getString(4);
-				InfoDesSalles[5] = Info.getString(5);
-				InfoDesSalles[6] = Info.getString(6);
-				InfoDesSalles[7] = Info.getString(7);
-				
+				for(t = 3; t < 8; t++){
+					InfoDesSalles[t] = Info.getString(t);
+				}
 				AjoutInfo(InfoDesSalles);
 			}
 			
@@ -228,11 +243,16 @@ public class ListeChoix extends JFrame implements ActionListener {
 	}
 	
 	public void AjoutInfo(String InfoDesSalles[]){
-		Value_description.setText(InfoDesSalles[3]);
-		Value_nbPersonneMax.setText(InfoDesSalles[4]);
-		Value_etage.setText(InfoDesSalles[5]);
-		Value_emailSalle.setText(InfoDesSalles[6]);
-		Value_codeSecret.setText(InfoDesSalles[7]);
+		t = 3;
+			Value_description.setText(InfoDesSalles[t]);
+		t++;
+			Value_nbPersonneMax.setText(InfoDesSalles[t]);
+		t++;
+			Value_etage.setText(InfoDesSalles[t]);
+		t++;
+			Value_emailSalle.setText(InfoDesSalles[t]);
+		t++;
+			Value_codeSecret.setText(InfoDesSalles[t]);
 	}
 
 	@Override
@@ -242,9 +262,11 @@ public class ListeChoix extends JFrame implements ActionListener {
 		if(e.getSource() == btnDeco){
 			new Connexion().setVisible(true);
 			this.setVisible(false);
+		}else if(e.getSource() == btnAjout){
+			if(C.getLvlUti() == 1){
+				System.out.println("good");
+			}
 		}
 		
-		
 	}
-	
 }
