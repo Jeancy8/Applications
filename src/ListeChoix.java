@@ -44,7 +44,7 @@ public class ListeChoix extends JFrame implements ActionListener {
 	private JTextField Value_nbPersonneMax;
 	private JTextField Value_etage;
 	private JTextField Value_emailSalle;
-	private JButton btnDeco, btnAjout;
+	private JButton btnDeco, btnAjout, btnModif, btnValider;
 	
 	JComboBox liste = new JComboBox();
 	String InfoDesSalles[] = new String[15];
@@ -80,6 +80,7 @@ public class ListeChoix extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public ListeChoix() {
+		getContentPane().setBackground(SystemColor.activeCaptionBorder);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(550, 300, 854, 314);
@@ -101,31 +102,35 @@ public class ListeChoix extends JFrame implements ActionListener {
 		
 		
 		Value_codeSecret = new JTextField();
-		Value_codeSecret.setBounds(374, 99, 86, 20);
+		Value_codeSecret.setForeground(Color.RED);
+		Value_codeSecret.setBounds(374, 99, 112, 20);
 		getContentPane().add(Value_codeSecret);
 		Value_codeSecret.setColumns(10);
 		Value_codeSecret.setEnabled(false);
 		
 		Value_description = new JTextField();
-		Value_description.setForeground(Color.ORANGE);
+		Value_description.setForeground(Color.RED);
 		Value_description.setBounds(227, 144, 233, 20);
 		getContentPane().add(Value_description);
 		Value_description.setColumns(10);
 		Value_description.setEnabled(false);
 		
 		Value_nbPersonneMax = new JTextField();
+		Value_nbPersonneMax.setForeground(Color.RED);
 		Value_nbPersonneMax.setBounds(481, 144, 46, 20);
 		getContentPane().add(Value_nbPersonneMax);
 		Value_nbPersonneMax.setColumns(10);
 		Value_nbPersonneMax.setEnabled(false);
 		
 		Value_etage = new JTextField();
+		Value_etage.setForeground(Color.RED);
 		Value_etage.setBounds(481, 175, 46, 20);
 		getContentPane().add(Value_etage);
 		Value_etage.setColumns(10);
 		Value_etage.setEnabled(false);
 		
 		Value_emailSalle = new JTextField();
+		Value_emailSalle.setForeground(Color.RED);
 		Value_emailSalle.setBounds(227, 175, 233, 20);
 		getContentPane().add(Value_emailSalle);
 		Value_emailSalle.setColumns(10);
@@ -161,9 +166,18 @@ public class ListeChoix extends JFrame implements ActionListener {
 		lblChoisirUneSalle.setBounds(359, 15, 127, 14);
 		getContentPane().add(lblChoisirUneSalle);
 		
-		JLabel lblCopyrightBlondinMayunga = new JLabel("Copyright Blondin Mayunga");
+		JLabel lblNewLabel_2 = new JLabel("Session ADMIN");
+		lblNewLabel_2.setForeground(SystemColor.desktop);
+		lblNewLabel_2.setBackground(Color.WHITE);
+		lblNewLabel_2.setFont(new Font("Agency FB", Font.BOLD, 13));
+		lblNewLabel_2.setBounds(650, 238, 119, 14);
+		//if(C.getLvlUti() == 1){
+			getContentPane().add(lblNewLabel_2);
+		//}
+		
+		JLabel lblCopyrightBlondinMayunga = new JLabel("© Copyright Blondin Mayunga");
 		lblCopyrightBlondinMayunga.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		lblCopyrightBlondinMayunga.setBounds(374, 250, 135, 14);
+		lblCopyrightBlondinMayunga.setBounds(359, 250, 135, 14);
 		getContentPane().add(lblCopyrightBlondinMayunga);
 		
 		btnDeco = new JButton("Deconnexion");
@@ -172,15 +186,26 @@ public class ListeChoix extends JFrame implements ActionListener {
 		btnDeco.addActionListener(this);
 		
 		btnAjout = new JButton("Ajouter une salle");
-		btnAjout.setBounds(338, 216, 168, 23);
+		btnAjout.setBounds(262, 216, 168, 23);
 		btnAjout.addActionListener(this);
-		if(C.getLvlUti() == 1){
+		//if(C.getLvlUti() == 1){
 			getContentPane().add(btnAjout);
-		}
+		//}
+		
+		btnModif = new JButton("Modifier");
+		btnModif.setBounds(454, 216, 89, 23);
+		btnModif.addActionListener(this);
+		getContentPane().add(btnModif);
+
+		
+		btnValider = new JButton("Valider");
+		btnValider.setBounds(390, 216, 89, 23);
+		btnValider.addActionListener(this);
+		
 		
 		JLabel label = new JLabel("");
-		label.setForeground(SystemColor.textHighlight);
-		label.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		label.setForeground(SystemColor.desktop);
+		label.setFont(new Font("Agency FB", Font.BOLD, 14));
 		label.setBounds(22, 11, 178, 20);
 		getContentPane().add(label);
 		label.setText(C.getPrenomUti()+" "+ C.getNomUti());
@@ -191,15 +216,6 @@ public class ListeChoix extends JFrame implements ActionListener {
 		label_1.setIcon(new ImageIcon(img));
 		label_1.setBounds(650, 15, 165, 149);
 		getContentPane().add(label_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("Session ADMIN");
-		lblNewLabel_2.setForeground(SystemColor.textHighlight);
-		lblNewLabel_2.setBackground(Color.WHITE);
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel_2.setBounds(650, 238, 119, 14);
-		if(C.getLvlUti() == 1){
-			getContentPane().add(lblNewLabel_2);
-		}
 		
 		RecuperationSalle();
 	}
@@ -254,6 +270,44 @@ public class ListeChoix extends JFrame implements ActionListener {
 		t++;
 			Value_codeSecret.setText(InfoDesSalles[t]);
 	}
+	
+	public void ActiveText(){
+		Value_codeSecret.setEnabled(true);
+		Value_description.setEnabled(true);
+		Value_nbPersonneMax.setEnabled(true);
+		Value_etage.setEnabled(true);
+		Value_emailSalle.setEnabled(true);
+	}
+	
+	public void RemoveBtn(){
+		ActiveText();
+		getContentPane().remove(btnModif);
+		getContentPane().remove(btnAjout);
+		getContentPane().add(btnValider);
+		getContentPane().validate();
+		getContentPane().repaint();
+	}
+	
+	public void MajText(){
+		/*try{
+			
+			Class.forName(driver).newInstance();
+			Connection con = DriverManager.getConnection(url, user, password);
+			
+			PreparedStatement ls = con.prepareStatement("SELECT * FROM salles WHERE nom ='"+ nomSalle +"'");
+			ResultSet Info = ls.executeQuery();
+			while(Info.next()){
+				for(t = 3; t < 8; t++){
+					InfoDesSalles[t] = Info.getString(t);
+				}
+				AjoutInfo(InfoDesSalles);
+			}
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Impossible de recuperer les informations des salles");
+		}*/
+	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -266,7 +320,11 @@ public class ListeChoix extends JFrame implements ActionListener {
 			if(C.getLvlUti() == 1){
 				System.out.println("good");
 			}
+		}else if(e.getSource() == btnModif){
+			System.out.println("test");
+			RemoveBtn();
+		}else if(e.getSource() == btnValider){
+			
 		}
-		
 	}
 }
